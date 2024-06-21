@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadingDiv.style.display = 'block';
 
     try {
-      const response = await fetch('https://api.example.com/apps');
+      const response = await fetch('https://store-zero.vercel.app/api/apps');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
