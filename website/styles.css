@@ -14,6 +14,8 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
 }
 
 h1 {
@@ -21,19 +23,17 @@ h1 {
   margin-bottom: 20px;
 }
 
-input, button {
-  display: block;
-  margin: 10px 0;
+.app {
+  margin-bottom: 20px;
   padding: 10px;
-  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
-#details {
+.app h2 {
   font-size: 18px;
-  line-height: 1.6;
 }
 
-#loading {
-  display: none;
-  font-size: 18px;
+.app p {
+  margin-top: 5px;
 }
