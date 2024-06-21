@@ -1,0 +1,28 @@
+[
+    {
+        "id": "1",
+        "name": "Eu Militar",
+        "company": "Wiser Educação",
+        "inAppPurchases": "Compras no app",
+        "rating": "4,2",
+        "reviews": "219 avaliações",
+        "logo": "logo.png",
+        "description": "O Eu Militar é especialista em cursos preparatórios para a carreira militar.",
+        "category": "Educação",
+        "dataSharing": "Informações pessoais e Identificadores do dispositivo e outros",
+        "dataCollection": "Informações financeiras, Atividade no app e Informações de desempenho do app"
+    },
+    {
+        "id": "2",
+        "name": "Outro App",
+        "company": "Outra Empresa",
+        "inAppPurchases": "Compras no app",
+        "rating": "3,9",
+        "reviews": "123 avaliações",
+        "logo": "logo2.png",
+        "description": "Descrição de outro app.",
+        "category": "Ferramentas",
+        "dataSharing": "Informações de localização e outros",
+        "dataCollection": "Histórico de navegação, Informações de contato e outros"
+    }
+]
