@@ -1,47 +1,56 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const detailsDiv = document.getElementById('details');
+  const appListDiv = document.getElementById('appList');
   const loadingDiv = document.getElementById('loading');
-  const fetchButton = document.getElementById('fetchButton');
 
-  fetchButton.addEventListener('click', () => {
-    const appId = document.getElementById('appId').value;
-    if (appId) {
-      fetchData(appId);
-    } else {
-      detailsDiv.innerHTML = '<p>Por favor, insira um ID válido.</p>';
-    }
-  });
-
-  async function fetchData(id) {
-    detailsDiv.innerHTML = '';
+  async function fetchData() {
     loadingDiv.style.display = 'block';
 
     try {
-      const response = await fetch(`https://store-zero.vercel.app/api/apps${id}`);
+      const response = await fetch('https://api.example.com/apps');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      displayData(data);
+      displayAppList(data);
     } catch (error) {
       console.error('Houve um problema com a requisição Fetch:', error);
-      detailsDiv.innerHTML = '<p>Erro ao carregar os dados.</p>';
+      appListDiv.innerHTML = '<p>Erro ao carregar os dados.</p>';
     } finally {
       loadingDiv.style.display = 'none';
     }
   }
 
-  function displayData(data) {
-    const featuresList = data.features.map(feature => `<li>${feature}</li>`).join('');
-    const html = `
-      <p><strong>Título:</strong> ${data.title}</p>
-      <p><strong>Descrição:</strong> ${data.description}</p>
-      <p><strong>Versão:</strong> ${data.version}</p>
-      <p><strong>Autor:</strong> ${data.author}</p>
-      <p><strong>Data de Lançamento:</strong> ${data.releaseDate}</p>
-      <p><strong>Funcionalidades:</strong></p>
-      <ul>${featuresList}</ul>
-    `;
-    detailsDiv.innerHTML = html;
+  function displayAppList(apps) {
+    appListDiv.innerHTML = '';
+
+    apps.forEach(app => {
+      const appDiv = document.createElement('div');
+      appDiv.classList.add('app');
+
+      const nameElement = document.createElement('h2');
+      nameElement.textContent = app.name;
+
+      const descriptionElement = document.createElement('p');
+      descriptionElement.textContent = app.description;
+
+      const versionElement = document.createElement('p');
+      versionElement.textContent = `Versão: ${app.version}`;
+
+      const downloadLinkElement = document.createElement('p');
+      const downloadLink = document.createElement('a');
+      downloadLink.textContent = 'Download';
+      downloadLink.href = app.downloadUrl;
+      downloadLink.setAttribute('target', '_blank');
+      downloadLinkElement.appendChild(downloadLink);
+
+      appDiv.appendChild(nameElement);
+      appDiv.appendChild(descriptionElement);
+      appDiv.appendChild(versionElement);
+      appDiv.appendChild(downloadLinkElement);
+
+      appListDiv.appendChild(appDiv);
+    });
   }
+
+  fetchData();
 });
