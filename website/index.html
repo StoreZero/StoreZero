@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoreZero</title>
+  <link rel="shortcut icon" href="./images/icone/favicon.png" type="image/x-icon">
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 60px; /* Espaço para o header fixo */
+    }
+    .app-details {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+    .app-screenshot {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .app-screenshot img {
+      max-width: 100%;
+      max-height: 200px; /* Limitação de altura */
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      margin: 5px; /* Espaço entre as imagens */
+    }
+    .app-description {
+      margin-top: 20px;
+    }
+    .site-header {
+      background-color: #f8f9fa;
+      padding: 10px 0;
+      margin-bottom: 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .site-logo {
+      height: 50px;
+    }
+    .site-footer {
+      background-color: #343a40;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .site-footer a {
+      color: #ffc107;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-12 text-left">
+          <img src="./images/icone/logo.png" alt="Logo do Site" class="site-logo">
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="app-details">
+      <div class="row">
+        <div class="col-md-4">
+          <img src="" alt="Imagem do Aplicativo" id="app-image" class="img-fluid rounded">
+        </div>
+        <div class="col-md-8">
+          <h2 id="app-name" class="mb-3"></h2>
+          <p id="app-category" class="text-muted mb-3"></p>
+          <p id="app-description" class="mb-3"></p>
+          <p id="app-price" class="mb-3"></p>
+          <a href="#" id="download-button" class="btn btn-primary btn-lg">Baixar</a>
+        </div>
+      </div>
+      <div class="app-screenshot" id="app-screenshots">
+        <!-- Aqui serão adicionadas as capturas de tela -->
+      </div>
+      <div id="app-reviews" class="mt-5">
+        <h3>Sobre</h3>
+        <!-- Aqui serão adicionadas as avaliações -->
+      </div>
+      <div id="app-reviewss" class="mt-5">
+        <!-- Aqui serão adicionadas as avaliações -->
+      </div>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2024 ZeroStore. Todos os direitos reservados.</p>
+      <p><a href="./politica/politicaprivacidade.html">Política de Privacidade</a> | <a href="./politica/termos.html">Termos de Uso</a></p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS and dependencies (opcional se necessário) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Substitua com a URL do seu aplicativo da web
+    var apiUrl = 'https://script.google.com/macros/s/AKfycbzWzHdtI4Jucx6yHHtQYk-Hske1YEjOf2reww2A1Q_U1bXTDd77v_lC7MxbEiJHNVY4/exec?id=';
+
+    // Obtém o ID da URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var id = urlParams.get('id');
+
+    fetch(apiUrl + id)
+      .then(response => response.json())
+      .then(data => {
+        // Verifica se os dados foram recebidos corretamente
+        console.log(data);
+        
+        // Preenche os detalhes do aplicativo
+        document.getElementById('app-name').innerText = data.nome;
+        document.getElementById('app-category').innerText = data.categoria;
+        document.getElementById('app-description').innerText = data.descricao;
+        document.getElementById('app-price').innerText = 'Preço: R$ ' + data.preco;
+        document.getElementById('app-reviewss').innerText = data.sobre;
+
+        // Configura a imagem do aplicativo
+        var appImage = document.getElementById('app-image');
+        appImage.src = data.imagem;
+        appImage.alt = data.nome;
+
+        // Botão de download
+        var downloadButton = document.getElementById('download-button');
+        downloadButton.href = data.url_download;
+        downloadButton.innerText = 'Baixar ' + data.nome;
+
+        // Preenche as capturas de tela
+        var screenshotsDiv = document.getElementById('app-screenshots');
+        data.capturas.forEach(screenshot => {
+          var img = document.createElement('img');
+          img.src = screenshot;
+          img.alt = 'Captura de tela do aplicativo';
+          img.classList.add('img-fluid', 'rounded'); // Adiciona classes Bootstrap
+          screenshotsDiv.appendChild(img);
+        });
+
+        // Atualiza o título da página com o nome do aplicativo
+        document.title = 'StoreZero: ' + data.nome;
+        console.log('Title updated to: ' + document.title); // Adiciona uma mensagem de log
+      })
+      .catch(error => {
+        console.error('Erro ao buscar detalhes:', error);
+      });
+  </script>
+</body>
+</html>
