@@ -204,33 +204,38 @@
       const appsToDisplay = allApps.slice(start, end);
 
       appsToDisplay.forEach(app => {
-        const appCard = document.createElement('div');
-        appCard.className = 'app-card';
-        appCard.onclick = function() {
-          window.location.href = 'app.html?id=' + app.id;
-        };
-
-        const img = document.createElement('img');
-        img.src = app.imagem;
-        img.alt = app.nome;
-
-        const appName = document.createElement('h5');
-        appName.innerText = app.nome;
-
-        const appCategory = document.createElement('p');
-        appCategory.innerText = app.categoria;
-
-        const appPrice = document.createElement('p');
-        appPrice.className = 'price';
-        appPrice.innerText = 'R$ ' + app.preco;
-
-        appCard.appendChild(img);
-        appCard.appendChild(appName);
-        appCard.appendChild(appCategory);
-        appCard.appendChild(appPrice);
-
+        const appCard = createAppCard(app);
         appList.appendChild(appCard);
       });
+    }
+
+    function createAppCard(app) {
+      const appCard = document.createElement('div');
+      appCard.className = 'app-card';
+      appCard.onclick = function() {
+        window.location.href = 'app.html?id=' + app.id;
+      };
+
+      const img = document.createElement('img');
+      img.src = app.imagem;
+      img.alt = app.nome;
+
+      const appName = document.createElement('h5');
+      appName.innerText = app.nome;
+
+      const appCategory = document.createElement('p');
+      appCategory.innerText = app.categoria;
+
+      const appPrice = document.createElement('p');
+      appPrice.className = 'price';
+      appPrice.innerText = 'R$ ' + app.preco;
+
+      appCard.appendChild(img);
+      appCard.appendChild(appName);
+      appCard.appendChild(appCategory);
+      appCard.appendChild(appPrice);
+
+      return appCard;
     }
 
     function setupPagination() {
@@ -256,8 +261,18 @@
     document.getElementById('search-form').addEventListener('submit', function(event) {
       event.preventDefault();
       const query = document.getElementById('search-input').value.toLowerCase();
-      const filteredApps = allApps.filter(app => app.nome.toLowerCase().includes(query));
-      displayFilteredApps(filteredApps);
+
+      // Fazer a requisição à API com o termo de busca
+            const searchUrl = `${apiUrl}?name=${encodeURIComponent(query)}`;
+
+      fetch(searchUrl)
+        .then(response => response.json())
+        .then(filteredApps => {
+          displayFilteredApps(filteredApps);
+        })
+        .catch(error => {
+          console.error('Erro ao buscar aplicativos filtrados:', error);
+        });
     });
 
     function displayFilteredApps(filteredApps) {
@@ -265,31 +280,7 @@
       appList.innerHTML = '';
 
       filteredApps.slice(0, appsPerPage).forEach(app => {
-        const appCard = document.createElement('div');
-        appCard.className = 'app-card';
-        appCard.onclick = function() {
-          window.location.href = 'app.html?id=' + app.id;
-        };
-
-        const img = document.createElement('img');
-        img.src = app.imagem;
-        img.alt = app.nome;
-
-        const appName = document.createElement('h5');
-        appName.innerText = app.nome;
-
-        const appCategory = document.createElement('p');
-        appCategory.innerText = app.categoria;
-
-        const appPrice = document.createElement('p');
-        appPrice.className = 'price';
-        appPrice.innerText = 'R$ ' + app.preco;
-
-        appCard.appendChild(img);
-        appCard.appendChild(appName);
-        appCard.appendChild(appCategory);
-        appCard.appendChild(appPrice);
-
+        const appCard = createAppCard(app);
         appList.appendChild(appCard);
       });
 
