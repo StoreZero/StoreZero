@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoreZero - Home</title>
+  <link rel="shortcut icon" href="./images/icone/favicon.png" type="image/x-icon">
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding-top: 60px; /* Espaço para o header fixo */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding-top: 120px; /* Espaço adicional para header fixo em telas menores */
+      }
+    }
+    .app-list {
+      max-width: 1200px;
+      margin: auto;
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .app-card {
+      background-color: var(--card-bg-color);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      margin: 10px;
+      cursor: pointer;
+      width: 200px;
+      text-align: center;
+      padding: 15px;
+      transition: transform 0.2s;
+    }
+    .app-card:hover {
+      transform: scale(1.05);
+    }
+    .app-card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+    }
+    .app-card h5 {
+      margin: 0;
+      font-size: 1.25rem;
+      margin-bottom: 5px;
+    }
+    .app-card p {
+      margin: 0;
+      color: var(--text-muted-color);
+      margin-bottom: 5px;
+    }
+    .app-card .price {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .site-header {
+      background-color: var(--header-bg-color);
+      padding: 10px 0;
+      margin-bottom: 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .site-logo {
+      height: 50px;
+      margin-right: 20px;
+    }
+    .search-form {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+    .search-input {
+      width: 100%;
+      max-width: 300px;
+      margin-right: 10px;
+    }
+    .site-footer {
+      background-color: #343a40;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+      margin-top: auto;
+    }
+    .site-footer a {
+      color: #ffc107;
+      text-decoration: none;
+    }
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    @media (max-width: 768px) {
+      .search-input {
+        max-width: 100%;
+        margin-right: 5px;
+      }
+      .site-header .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .search-form {
+        margin-top: 10px;
+      }
+    }
+    .paginator {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .paginator button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .paginator button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container d-flex align-items-center">
+      <img src="./images/icone/logo.png" alt="Logo do Site" class="site-logo">
+      <form class="search-form" id="search-form">
+        <input type="text" class="form-control search-input" id="search-input" placeholder="Pesquisar app...">
+        <button type="submit" class="btn btn-primary">Pesquisar</button>
+      </form>
+    </div>
+  </header>
+
+  <div class="loading-spinner" id="loading-spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Carregando...</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="app-list" id="app-list">
+      <!-- Os aplicativos serão adicionados aqui -->
+    </div>
+    <div class="paginator" id="paginator">
+      <!-- Botões de paginação serão adicionados aqui -->
+    </div>
+  </div>
+  
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2024 StoreZero. Todos os direitos reservados.</p>
+      <p><a href="./politica/politicaprivacidade.html">Política de Privacidade</a> | <a href="./politica/termos.html">Termos de Uso</a> | <a href="./enviarapk">Enviar APK</a></p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS and dependencies (opcional se necessário) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbzWzHdtI4Jucx6yHHtQYk-Hske1YEjOf2reww2A1Q_U1bXTDd77v_lC7MxbEiJHNVY4/exec';
+    const appsPerPage = 6;
+    let currentPage = 1;
+    let allApps = [];
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        allApps = data;
+        displayApps(currentPage);
+        setupPagination();
+        document.getElementById('loading-spinner').style.display = 'none';
+      })
+      .catch(error => {
+        console.error('Erro ao buscar lista de aplicativos:', error);
+        document.getElementById('loading-spinner').style.display = 'none';
+      });
+
+    function displayApps(page) {
+      const appList = document.getElementById('app-list');
+      appList.innerHTML = '';
+
+      const start = (page - 1) * appsPerPage;
+      const end = start + appsPerPage;
+      const appsToDisplay = allApps.slice(start, end);
+
+      appsToDisplay.forEach(app => {
+        const appCard = document.createElement('div');
+        appCard.className = 'app-card';
+        appCard.onclick = function() {
+          window.location.href = 'app.html?id=' + app.id;
+        };
+
+        const img = document.createElement('img');
+        img.src = app.imagem;
+        img.alt = app.nome;
+
+        const appName = document.createElement('h5');
+        appName.innerText = app.nome;
+
+        const appCategory = document.createElement('p');
+        appCategory.innerText = app.categoria;
+
+        const appPrice = document.createElement('p');
+        appPrice.className = 'price';
+        appPrice.innerText = 'R$ ' + app.preco;
+
+        appCard.appendChild(img);
+        appCard.appendChild(appName);
+        appCard.appendChild(appCategory);
+        appCard.appendChild(appPrice);
+
+        appList.appendChild(appCard);
+      });
+    }
+
+    function setupPagination() {
+      const paginator = document.getElementById('paginator');
+      paginator.innerHTML = '';
+
+      const totalPages = Math.ceil(allApps.length / appsPerPage);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.innerText = i;
+        pageButton.disabled = (i === currentPage);
+        pageButton.onclick = function() {
+          currentPage = i;
+          displayApps(currentPage);
+          setupPagination();
+        };
+        paginator.appendChild(pageButton);
+      }
+    }
+
+    // Função de busca
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const query = document.getElementById('search-input').value.toLowerCase();
+      const filteredApps = allApps.filter(app => app.nome.toLowerCase().includes(query));
+      displayFilteredApps(filteredApps);
+    });
+
+    function displayFilteredApps(filteredApps) {
+      const appList = document.getElementById('app-list');
+      appList.innerHTML = '';
+
+      filteredApps.slice(0, appsPerPage).forEach(app => {
+        const appCard = document.createElement('div');
+        appCard.className = 'app-card';
+        appCard.onclick = function() {
+          window.location.href = 'app.html?id=' + app.id;
+        };
+
+        const img = document.createElement('img');
+        img.src = app.imagem;
+        img.alt = app.nome;
+
+        const appName = document.createElement('h5');
+        appName.innerText = app.nome;
+
+        const appCategory = document.createElement('p');
+        appCategory.innerText = app.categoria;
+
+        const appPrice = document.createElement('p');
+        appPrice.className = 'price';
+        appPrice.innerText = 'R$ ' + app.preco;
+
+        appCard.appendChild(img);
+        appCard.appendChild(appName);
+        appCard.appendChild(appCategory);
+        appCard.appendChild(appPrice);
+
+        appList.appendChild(appCard);
+      });
+
+      setupFilteredPagination(filteredApps);
+    }
+
+    function setupFilteredPagination(filteredApps) {
+      const paginator = document.getElementById('paginator');
+      paginator.innerHTML = '';
+
+      const totalPages = Math.ceil(filteredApps.length / appsPerPage);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.innerText = i;
+        pageButton.disabled = (i === currentPage);
+        pageButton.onclick = function() {
+          currentPage = i;
+          const start = (currentPage - 1) * appsPerPage;
+          const end = start + appsPerPage;
+          displayFilteredApps(filteredApps.slice(start, end));
+        };
+        paginator.appendChild(pageButton);
+      }
+    }
+  </script>
+</body>
+</html>
