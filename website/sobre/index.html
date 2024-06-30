@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoreZero About</title>
+	<link rel="shortcut icon" href=".././images/icone/favicon.png" type="image/x-icon">
+	<!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos customizados -->
+    <style>
+        body {
+      padding-top: 60px; /* Espaço para o header fixo */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding-top: 120px; /* Espaço adicional para header fixo em telas menores */
+      }
+    }
+    .app-list {
+      max-width: 1200px;
+      margin: auto;
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .app-card {
+      background-color: var(--card-bg-color);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      margin: 10px;
+      cursor: pointer;
+      width: 200px;
+      text-align: center;
+      padding: 15px;
+      transition: transform 0.2s;
+    }
+    .app-card:hover {
+      transform: scale(1.05);
+    }
+    .app-card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+    }
+    .app-card h5 {
+      margin: 0;
+      font-size: 1.25rem;
+      margin-bottom: 5px;
+    }
+    .app-card p {
+      margin: 0;
+      color: var(--text-muted-color);
+      margin-bottom: 5px;
+    }
+    .app-card .price {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .site-header {
+      background-color: var(--header-bg-color);
+      padding: 10px 0;
+      margin-bottom: 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .site-logo {
+      height: 50px;
+      margin-right: 20px;
+    }
+    .search-form {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+    .search-input {
+      width: 100%;
+      max-width: 300px;
+      margin-right: 10px;
+    }
+    .site-footer {
+      background-color: #343a40;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+      margin-top: auto;
+    }
+    .site-footer a {
+      color: #ffc107;
+      text-decoration: none;
+    }
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    @media (max-width: 768px) {
+      .search-input {
+        max-width: 100%;
+        margin-right: 5px;
+      }
+      .site-header .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .search-form {
+        margin-top: 10px;
+      }
+    }
+    .paginator {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .paginator button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .paginator button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- Conteúdo principal -->
+    <div class="container mt-4">
+        <!-- Seção de introdução -->
+        <section id="intro" class="text-center">
+            <div class="jumbotron">
+                <h1 class="display-4">Bem-vindo ao StoreZero</h1>
+                <hr class="my-4">
+                <p>Página Sobre</p>
+            </div>
+        </section>
+
+        <!-- Seção de serviços -->
+        <section id="services" class="mt-5">
+            <h2 class="text-center mb-4">Nossas Funcionalidades</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Postagem De Apps</h5>
+                            <p class="card-text">Postagem De Apps Simplificada (Scaneamos o Aplicativo Antes Da Postagem Concluir 100%).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mecanismo de Busca</h5>
+                            <p class="card-text">Nosso Mecanismo de Busca Permite Você Pesquisar o App Pelo Nome (Em Breve Pelo Nome do Criador).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Tipos de Arquivo ou URL Para Postagem</h5>
+                            <p class="card-text">Para Fazer a Postagem Do Seu App Precisamos De Um Arquivo APK `Para Testa e Uma URL Com o Final .APK Para Fazer a Postagem.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="site-footer">
+        <div class="container">
+      <p>&copy; 2024 StoreZero. Todos os direitos reservados.</p>
+      <p><a href=".././politica/politicaprivacidade.html">Política de Privacidade</a> | <a href=".././politica/termos.html">Termos de Uso</a></p>
+	  <p><a href=".././enviarapk/index.html">Enviar APK</a> | <a href=".././sobre/index.html">Sobre</a></p>
+    </div>
+    </footer>
+	
+	 <!-- Bootstrap JS and dependencies (opcional se necessário) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
